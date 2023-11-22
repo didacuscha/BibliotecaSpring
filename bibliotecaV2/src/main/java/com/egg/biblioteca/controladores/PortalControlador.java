@@ -12,7 +12,7 @@ public class PortalControlador {
     public String index() {
         return "index.html";
     }
-
+    /*
     @GetMapping("/registrar")
     public String registrar() {
         return "registro.html";
@@ -22,4 +22,6 @@ public class PortalControlador {
     public String login() {
         return "login.html";
     }
+    
+     */
 }
