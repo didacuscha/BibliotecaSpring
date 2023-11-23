@@ -22,8 +22,14 @@ import org.springframework.security.web.SecurityFilterChain;
 //@EnableMethodSecurity
 public class SeguridadWeb {
 
-    //@Autowired
-    //private UsuarioServicio usuarioServicio;
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(usuarioServicio)
+                .passwordEncoder(new BCryptPasswordEncoder());
+    }
 
     @Bean
     SecurityFilterChain web(HttpSecurity http) throws Exception {
