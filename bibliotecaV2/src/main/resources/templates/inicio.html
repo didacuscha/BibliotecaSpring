@@ -93,7 +93,7 @@
                     <p class="tituloLibros" th:if="${session.usuariosession != null}" th:text=" 'Hola de vuelta '+ ${session.usuariosession.nombre} "></p>
                 </div>
                 <div class="container">
-                    <a class="d-flex align-items-center">
+                    <a th:if="${session.usuariosession.imagen != null}" class="d-flex align-items-center">
                         <img class="logo"  th:src="@{/imagen/perfil/__${session.usuariosession.id}__}" alt="profile image">
                     </a>
                 </div>

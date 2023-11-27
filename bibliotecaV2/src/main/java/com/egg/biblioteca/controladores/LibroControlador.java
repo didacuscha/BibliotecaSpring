@@ -68,7 +68,7 @@ public class LibroControlador {
         List<Libro> libros = libroServicio.listarLibros();
         modelo.addAttribute("libros", libros);
 
-        return "libro_list";
+        return "libro_list.html";
     }
 
     @GetMapping("/modificar/{isbn}")

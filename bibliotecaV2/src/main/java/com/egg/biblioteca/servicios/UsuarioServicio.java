@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -86,6 +86,34 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioRepositorio.getOne(id);
     }
 
+    @Transactional(readOnly=true)
+    public List<Usuario> listarUsuarios() {
+
+        List<Usuario> usuarios = new ArrayList();
+
+        usuarios = usuarioRepositorio.findAll();
+
+        return usuarios;
+    }
+
+    @Transactional
+    public void cambiarRol(String id){
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+
+        if(respuesta.isPresent()) {
+
+            Usuario usuario = respuesta.get();
+
+            if(usuario.getRol().equals(Rol.USER)) {
+
+                usuario.setRol(Rol.ADMIN);
+
+            }else if(usuario.getRol().equals(Rol.ADMIN)) {
+                usuario.setRol(Rol.USER);
+            }
+        }
+    }
+
     private void validar(String nombre, String email, String password, String password2) throws MiException {
 
         if (nombre.isEmpty() || nombre == null) {
@@ -110,6 +138,8 @@ public class UsuarioServicio implements UserDetailsService {
         Usuario usuario = usuarioRepositorio.buscarPorEmail(email);
 
         if (usuario != null) {
+            // debugging print to check user Role
+            //System.out.println("User Role: " + usuario.getRol().toString());
 
             List<GrantedAuthority> permisos = new ArrayList();
 

@@ -31,7 +31,9 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-              <li><a class="dropdown-item" sec:authorize="hasAuthority('ADMIN')" th:href="@{/libro/registrar}">Crear Libro</a></li>
+              <li th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+                <a class="dropdown-item" th:href="@{/libro/registrar}">Crear Libro</a>
+              </li>
               <li><hr class="dropdown-divider"></li>
 
               <li><a class="dropdown-item" th:href="@{/libro/lista}">Listar Libros</a></li>
@@ -39,20 +41,21 @@
           </li>
 
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" th:if="${session.usuariosession != null}" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <li class="nav-item dropdown"  th:if="${session.usuariosession != null}">
+            <a class="nav-link dropdown-toggle"  th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Autores
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-              <li><a class="dropdown-item" sec:authorize="hasAuthority('ADMIN')" th:href="@{/autor/registrar}">Crear Autor</a></li>
+              <li th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+                <a class="dropdown-item" th:href="@{/autor/registrar}">Crear Autor</a>
+              </li>
+
               <li><hr class="dropdown-divider"></li>
 
               <li><a class="dropdown-item" th:href="@{/autor/lista}">Listar Autores</a></li>
             </ul>
           </li>
-
-
 
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" th:if="${session.usuariosession != null}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -60,7 +63,9 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 
-              <li><a class="dropdown-item" sec:authorize="hasAuthority('ADMIN')" th:href="@{/editorial/registrar}">Crear Editorial</a></li>
+              <li th:if="${#authorization.expression('hasAuthority(''ROLE_ADMIN'')')}">
+                <a class="dropdown-item" th:href="@{/editorial/registrar}">Crear Editorial</a>
+              </li>
               <li><hr class="dropdown-divider"></li>
 
               <li><a class="dropdown-item" th:href="@{/editorial/lista}">Listar Editoriales</a></li>
@@ -71,6 +76,8 @@
               Perfil
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" th:href="@{/perfil}" >Editar Perfil</a></li>
+              <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="/logout" >Cerrar Sesión</a></li>
             </ul>
           </li>

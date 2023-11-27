@@ -19,8 +19,19 @@ public class PortalControlador {
     private UsuarioServicio usuarioServicio;
 
     @GetMapping("/")
-    public String index() {
+    public String index(HttpSession session) {
+        Usuario logueado =  (Usuario) session.getAttribute("usuariosession");
+
+        if (logueado != null) {
+            if ("ADMIN".equals(logueado.getRol().toString())) {
+                return "redirect:/admin/dashboard";
+            } else if ("USER".equals(logueado.getRol().toString())) {
+                return "redirect:/inicio";
+            }
+        }
+
         return "index.html";
+
     }
 
     @GetMapping("/registrar")
@@ -61,6 +72,7 @@ public class PortalControlador {
         if (logueado.getRol().toString().equals("ADMIN")) {
             return "redirect:/admin/dashboard";
         }
+
         return "inicio.html";
     }
 
@@ -75,12 +87,18 @@ public class PortalControlador {
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping("/perfil/{id}")
     public String actualizar(MultipartFile archivo, @PathVariable String id, @RequestParam String nombre, @RequestParam String email,
-                             @RequestParam String password, @RequestParam String password2, ModelMap modelo) {
+                             @RequestParam String password, @RequestParam String password2, ModelMap modelo, HttpSession session) {
 
         try {
             usuarioServicio.actualizar(archivo, id, nombre, email, password, password2);
 
             modelo.put("exito", "Usuario actualizado correctamente!");
+
+            Usuario logueado =  (Usuario) session.getAttribute("usuariosession");
+
+            if (logueado.getRol().toString().equals("ADMIN")) {
+                return "redirect:/admin/dashboard";
+            }
 
             return "inicio.html";
         } catch (MiException ex) {
