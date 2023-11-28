@@ -66,8 +66,12 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setEmail(email);
 
             usuario.setPassword(new BCryptPasswordEncoder().encode(password));
+            if (usuario.getRol().equals("USER")) {
+                usuario.setRol(Rol.USER);
+            } else if (usuario.getRol().equals("ADMIN")) {
+                usuario.setRol(Rol.ADMIN);
+            }
 
-            usuario.setRol(Rol.USER);
             String idImagen = null;
 
             if (usuario.getImagen() != null) {
@@ -139,7 +143,7 @@ public class UsuarioServicio implements UserDetailsService {
 
         if (usuario != null) {
             // debugging print to check user Role
-            //System.out.println("User Role: " + usuario.getRol().toString());
+            System.out.println("User Role: " + usuario.getRol().toString());
 
             List<GrantedAuthority> permisos = new ArrayList();
 

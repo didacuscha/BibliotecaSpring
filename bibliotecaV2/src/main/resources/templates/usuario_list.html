@@ -116,7 +116,7 @@
         <tr>
           <th scope="row" th:text="${usuario.id}"></th>
           <td th:text="${usuario.nombre}"></td>
-          <td
+          <td>
           <a><img th:if="${usuario.imagen != null}" class="logo" th:src="@{/imagen/perfil/__${usuario.id}__}" ></a>
           </td>
 
@@ -127,7 +127,7 @@
           </td>
 
           <td>
-            <a th:href= "@{/usuario/modificar/__${usuario.id}__}"><i class="fas fa-feather-alt"></i> Modificar</a>
+            <a th:href= "@{/admin/modificar/__${usuario.id}__}"><i class="fas fa-feather-alt"></i> Modificar</a>
           </td>
 
         </tr>

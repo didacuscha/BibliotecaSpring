@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration
@@ -39,8 +40,23 @@ public class SeguridadWeb {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/admin/*").hasRole("ADMIN")
                         .requestMatchers("/css/*", "/js/*", "/img/*", "/**")
+                        //.requestMatchers("/css/*", "/js/*", "/img/*", "/inicio", "/", "/error", "/logout", "/perfil", "libro/lista","editorial/lista", "autor/lista").hasRole("USER")
+                        //.requestMatchers("/css/*", "/js/*", "/img/*", "/registro", "/registrar", "/error", "/", "/inicio")
+                        //.requestMatchers(new AntPathRequestMatcher("/**")).hasRole("ADMIN")
+                        //.requestMatchers(new AntPathRequestMatcher("/**")).hasRole("USER")
+                        //.requestMatchers("/css/*", "/js/*", "/img/*", "/inicio", "/", "/error", "/logout", "/perfil", "libro/lista","editorial/lista", "autor/lista").hasRole("USER")
+                        //.requestMatchers("/css/*", "/js/*", "/img/*", "/registro", "/login", "/registrar", "/error")
+                        //.requestMatchers("/css/*", "/js/*", "/img/*", "/registro", "/login", "/registrar")
+                        //.requestMatchers("/css/*", "/js/*", "/img/*", "/registro", "/registrar", "/error")
                         .permitAll()
                 )
+                /*
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/css/*", "/js/*", "/img/*", "/inicio", "/", "/error", "/logout", "/perfil", "libro/lista","editorial/lista", "autor/lista", "/logincheck").hasRole("USER")
+                        .requestMatchers("/user/*")
+                        .permitAll()
+                )
+                 */
                 .formLogin(login -> login
                         .loginPage("/login")
                         .loginProcessingUrl("/logincheck")

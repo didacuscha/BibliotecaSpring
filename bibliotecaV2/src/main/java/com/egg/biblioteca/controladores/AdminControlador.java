@@ -38,4 +38,26 @@ public class AdminControlador {
         return "redirect:/admin/usuarios";
     }
 
+    @GetMapping("/modificar/{id}")
+    public String modificar(@PathVariable String id, ModelMap modelo){
+        modelo.put("usuario", usuarioServicio.getOne(id));
+
+        return "usuario_modificar.html";
+    }
+    /*
+    @PostMapping("/modificar/{id}")
+    public String modificar(@PathVariable String id, String nombre, ModelMap modelo){
+        try {
+            autorServicio.modificarAutor(nombre, id);
+
+            return "redirect:../lista";
+        } catch (MiException ex) {
+            modelo.put("error", ex.getMessage());
+            return "autor_modificar.html";
+        }
+
+    }
+
+     */
+
 }

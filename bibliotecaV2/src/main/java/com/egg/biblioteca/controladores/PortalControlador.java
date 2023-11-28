@@ -111,4 +111,32 @@ public class PortalControlador {
         }
 
     }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @PostMapping("/admin/modificar/{id}")
+    public String Adminactualizar(MultipartFile archivo, @PathVariable String id, @RequestParam String nombre, @RequestParam String email,
+                             @RequestParam String password, @RequestParam String password2, ModelMap modelo, HttpSession session) {
+
+        try {
+            usuarioServicio.actualizar(archivo, id, nombre, email, password, password2);
+
+            modelo.put("exito", "Usuario actualizado correctamente!");
+
+            Usuario logueado =  (Usuario) session.getAttribute("usuariosession");
+
+            if (logueado.getRol().toString().equals("ADMIN")) {
+                return "redirect:/admin/dashboard";
+            }
+
+            return "inicio.html";
+        } catch (MiException ex) {
+
+            modelo.put("error", ex.getMessage());
+            modelo.put("nombre", nombre);
+            modelo.put("email", email);
+
+            return "usuario_modificar.html";
+        }
+
+    }
 }
