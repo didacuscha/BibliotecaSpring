@@ -63,7 +63,7 @@ public class EditorialControlador {
     public String modificar(@PathVariable String id, String nombre, ModelMap modelo){
         try {
             editorialServicio.modificarEditorial(nombre, id);
-
+            modelo.put("exito", "La Editorial fue registrada correctamente!");
             return "redirect:/editorial/lista"; // this return statement differs from repository
             //return "redirect:../lista";
         } catch (MiException ex) {
