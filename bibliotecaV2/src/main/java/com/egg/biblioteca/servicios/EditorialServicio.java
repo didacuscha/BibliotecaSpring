@@ -37,12 +37,10 @@ public class EditorialServicio {
         validar(nombre);
         System.out.println("id:" + id);
         System.out.println("nombre:" + nombre);
-        // la respuesta es = a findById(nombre) en vez de id ya que de alguna manera se invirtio el orden de los parametros
         Optional<Editorial> respuesta = editorialRepositorio.findById(id);
         System.out.println("respuesta: " + respuesta);
         if (respuesta.isPresent()) {
             Editorial editorial = respuesta.get();
-            // editorial.setNombre() se le pasa el id porque de alguna manera se invirtieron en el metodo
             editorial.setNombre(nombre);
             editorialRepositorio.save(editorial);
         }

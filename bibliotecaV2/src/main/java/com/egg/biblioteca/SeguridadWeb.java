@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -39,13 +40,6 @@ public class SeguridadWeb {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                                 .anyRequest().authenticated()
-                        //.requestMatchers("/admin/*").hasRole("ADMIN")
-                        //.requestMatchers("/css/*", "/js/*", "/img/*", "/**")
-                        //.requestMatchers("/css/*", "/js/*", "/img/*", "/inicio", "/", "/error", "/logout", "/perfil", "libro/lista","editorial/lista", "autor/lista").hasRole("USER")
-                        //.requestMatchers("/css/*", "/js/*", "/img/*", "/registro", "/registrar", "/error", "/", "/inicio")
-                        //.requestMatchers(new AntPathRequestMatcher("/**")).hasRole("ADMIN")
-                        //.requestMatchers(new AntPathRequestMatcher("/**")).hasRole("USER")
-                        //.permitAll()
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
@@ -54,7 +48,6 @@ public class SeguridadWeb {
                         .passwordParameter("password")
                         .defaultSuccessUrl("/inicio")
                         .loginProcessingUrl("/logincheck")
-                        //.failureUrl("login?error=error")
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -67,6 +60,10 @@ public class SeguridadWeb {
         return http.build();
     }
 
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers("/registrar", "/registro", "/css/*", "/js/*", "/img/*" );
+    }
 
 
 }
