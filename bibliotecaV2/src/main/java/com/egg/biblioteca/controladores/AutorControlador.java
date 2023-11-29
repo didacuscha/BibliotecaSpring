@@ -4,6 +4,7 @@ import com.egg.biblioteca.entidades.Autor;
 import com.egg.biblioteca.excepciones.MiException;
 import com.egg.biblioteca.servicios.AutorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +49,7 @@ public class AutorControlador {
         return "autor_list.html";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, ModelMap modelo){
         modelo.put("autor", autorServicio.getOne(id));

@@ -5,6 +5,7 @@ import com.egg.biblioteca.excepciones.MiException;
 import com.egg.biblioteca.servicios.EditorialServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +51,7 @@ public class EditorialControlador {
         return "editorial_list.html";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/modificar/{id}")
     public String modificar(@PathVariable String id, ModelMap modelo){
         modelo.put("editorial", editorialServicio.getOne(id));

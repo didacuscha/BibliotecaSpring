@@ -9,6 +9,7 @@ import com.egg.biblioteca.servicios.EditorialServicio;
 import com.egg.biblioteca.servicios.LibroServicio;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,6 +72,7 @@ public class LibroControlador {
         return "libro_list.html";
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/modificar/{isbn}")
     public String modificar(@PathVariable Long isbn, ModelMap modelo) {
 
