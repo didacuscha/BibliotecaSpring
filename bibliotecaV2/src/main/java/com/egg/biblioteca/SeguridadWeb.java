@@ -39,7 +39,10 @@ public class SeguridadWeb {
     SecurityFilterChain web(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((authorize) -> authorize
-                                .anyRequest().authenticated()
+                        .requestMatchers("/admin/*").hasAnyRole("ADMIN")
+                        .requestMatchers("/registrar", "/registro", "/css/*", "/js/*", "/img/*", "/login")
+                        .permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
@@ -59,12 +62,12 @@ public class SeguridadWeb {
 
         return http.build();
     }
-
+    /*
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers("/registrar", "/registro", "/css/*", "/js/*", "/img/*" );
     }
-
+    */
 
 }
 

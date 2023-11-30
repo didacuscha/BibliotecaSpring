@@ -20,7 +20,6 @@ public class ErroresControlador implements ErrorController {
     public String renderErrorPage(Model model, HttpServletResponse httpResponse) throws IOException {
         String errorMsg = "";
         int httpErrorCode = httpResponse.getStatus();
-
         switch (httpErrorCode) {
             case 400:
                 errorMsg = "El recurso solicitado no existe.";
